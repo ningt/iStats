@@ -4,7 +4,13 @@
   "description": "Display system stats on your menubar",
   "main": "main.js",
   "scripts": {
-    "start": "grunt & electron ."
+    "start": "grunt & electron .",
+    "build": "electron-packager . QuickStats --platform=darwin --arch=x64 --version=0.37.3 --icon=images/QuickStats.icns",
+    "publish": "publish-release --template notes.md --assets QuickStats-darwin-x64.zip"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ningt/quick-stats.git"
   },
   "author": "Tang Ning",
   "license": "ISC",
@@ -19,6 +25,7 @@
     "grunt": "^0.4.5",
     "grunt-contrib-less": "^1.2.0",
     "grunt-contrib-watch": "^1.0.0",
-    "jit-grunt": "^0.10.0"
+    "jit-grunt": "^0.10.0",
+    "publish-release": "^1.2.0"
   }
 }
