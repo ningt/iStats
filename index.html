@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Web Scraper</title>
+
+    <link rel="stylesheet" href="node_modules/photon/dist/css/photon.css">
+    <link href="./stylesheets/main.css" rel="stylesheet" type="text/css">
+
+    <script>var d3 = require('d3');</script>
+</head>
+
+<body>
+    <div class="window">
+        <div class="window-content">
+            <div id="container"></div>
+
+            <div class="gauge-container">
+                <p>CPU Usage</p>
+                <svg id="cpu-usage" width="100%" height="150"></svg>
+            </div>
+
+            <div class="gauge-container">
+                <p>Memory Usage</p>
+               <svg id="mem-usage" width="100%" height="150"></svg>
+            </div>
+        </div>
+    </div>
+
+    <script id="template" type="text/ractive">
+            <table class="table-striped">
+                <tr>
+                    <td>CPU Architecture</td>
+                    <td>{{ arch }}</td>
+                </tr>
+                <tr>
+                    <td>CPU Info</td>
+                    <td>{{ cpu_model }}</td>
+                </tr>
+                <tr>
+                    <td>Total Memory</td>
+                    <td>{{ total_mem }}</td>
+                </tr>
+                <tr>
+                    <td>Free Memory</td>
+                    <td>{{ free_mem }}</td>
+                </tr>
+            </table>
+    </script>
+
+    <script src="js/liquidFillGauge.js"></script>
+    <script src="js/stats.js"></script>
+</body>
+</html>
