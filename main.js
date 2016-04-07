@@ -31,7 +31,7 @@ mb.on('ready', function ready () {
 });
 
 mb.on('after-create-window', function() {
-    mb.window.openDevTools();
+    //mb.window.openDevTools();
     mb.window.setResizable(false);
 });
 
