@@ -6,15 +6,15 @@
     </tr>
     <tr>
         <td>Used</td>
-        <td class="right">{{ mem.used }} %</td>
+        <td class="right">{{ mem.used }}</td>
     </tr>
     <tr>
         <td>Wired</td>
-        <td class="right">{{ mem.wired }} %</td>
+        <td class="right">{{ mem.wired }}</td>
     </tr>
     <tr>
         <td>Unused</td>
-        <td class="right">{{ mem.unused }} %</td>
+        <td class="right">{{ mem.unused }}</td>
     </tr>
 </table>
 <table>
@@ -24,7 +24,7 @@
     {{#each procs:p}}
     <tr>
         <td>{{ command }}</td>
-        <td class="right">{{ mem }} %</td>
+        <td class="right">{{ mem }}</td>
     </tr>
     {{/each}}
 </table>

@@ -78,11 +78,11 @@ function plotChart(id, data) {
     });
 }
 
-var cpu_data = {
-    chart_data: [[], []]
-};
-
 function showCpuStats() {
+    var cpu_data = {
+        chart_data: [[], []]
+    };
+
     if (!cpu_monitor)
         cpu_monitor = new os.CpuMonitor({delay: 1});
 
@@ -100,18 +100,18 @@ function showCpuStats() {
     });
 }
 
-var mem_data = {
-    chart_data: [[], []]
-};
-
 function showMemStats() {
+    var mem_data = {
+        chart_data: [[], []]
+    };
+
     if (!mem_monitor)
         mem_monitor = new os.MemMonitor({delay: 1});
 
     mem_monitor.on('memUsage', function(data) {
-        mem_data.cpu = data;
-        mem_data.chart_data[0].push(parseFloat(1));
-        mem_data.chart_data[1].push(parseFloat(2));
+        mem_data.mem = data;
+        mem_data.chart_data[0].push(parseFloat(data.wired_kb / 1024));
+        mem_data.chart_data[1].push(parseFloat(data.used_kb / 1024));
 
         render('mem_chart', templates.mem, mem_data);
     });
@@ -148,10 +148,16 @@ ipc.on('after_hide', function() {
 function switchDisplay(display) {
     currentDisplay = display;
 
-    if (currentDisplay === 'cpu')
+    if (currentDisplay === 'cpu') {
         showCpuStats();
-    else if (currentDisplay === 'mem')
+        mem_monitor.emit('exit');
+        mem_monitor = null;
+    }
+    else if (currentDisplay === 'mem') {
         showMemStats();
+        cpu_monitor.emit('exit');
+        cpu_monitor = null;
+    }
 }
 
 function quit() {
