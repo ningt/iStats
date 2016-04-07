@@ -7,7 +7,8 @@ var opts = {
     dir: __dirname,
     icon: path.join(__dirname, 'images', 'Icon.png'),
     tooltip: 'Quick Stats',
-    height: 330
+    width: 300,
+    height: 350
 };
 
 var mb = menubar(opts);
@@ -25,7 +26,7 @@ mb.on('ready', function ready () {
 });
 
 mb.on('after-create-window', function() {
-//    mb.window.openDevTools();
+    mb.window.openDevTools();
     mb.window.setResizable(false);
 });
 
