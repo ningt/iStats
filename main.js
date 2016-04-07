@@ -2,6 +2,7 @@
 
 const path = require('path')
 const menubar = require('menubar');
+const ipcMain = require('electron').ipcMain;
 
 var opts = {
     dir: __dirname,
@@ -22,6 +23,10 @@ mb.on('ready', function ready () {
 
     mb.on('after-hide', function show () {
         mb.window.webContents.send("after_hide");
+    });
+
+    ipcMain.on('quit', function() {
+        mb.app.terminate();
     });
 });
 

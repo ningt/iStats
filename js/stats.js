@@ -15,7 +15,6 @@ var templates = {
     mem: fs.readFileSync(__dirname + '/templates/mem.tmpl').toString()
 };
 
-
 function plotCpuChart(data) {
     var option = {
         chart: {
@@ -121,6 +120,10 @@ ipc.on('after_hide', function() {
     cpu_chart = null;
 });
 
+function quit() {
+    ipc.send('quit');
+}
+
 function render(template, data) {
     if (ract)
         ract.set(data);
@@ -130,6 +133,7 @@ function render(template, data) {
         template: template,
         data: data
     });
-        plotCpuChart(data.chart_data);
+
+    plotCpuChart(data.chart_data);
 }
 
