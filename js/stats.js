@@ -8,14 +8,14 @@ const ipc = require('electron').ipcRenderer;
 
 require('highcharts/modules/exporting')(Highcharts);
 
-var ract, cpu_chart, cpu_monitor;
+var ract, cpu_chart, cpu_monitor, mem_monitor;
 
 var templates = {
     cpu: fs.readFileSync(__dirname + '/templates/cpu.tmpl').toString(),
     mem: fs.readFileSync(__dirname + '/templates/mem.tmpl').toString()
 };
 
-function plotCpuChart(data) {
+function plotChart(id, data) {
     var option = {
         chart: {
             type: 'area'
@@ -64,67 +64,101 @@ function plotCpuChart(data) {
         },
         series: [{
             showInLegend: false,
-            data: data.sys
+            data: data[0]
         }, {
             showInLegend: false,
-            data: data.user
+            data: data[1]
         }],
         credits: {
             enabled: false
         }
     };
 
-    if (!cpu_chart) {
-        Highcharts.chart('cpu_chart', option, function(chart) {
-            console.log('chart created');
-        });
-    }
-    else {
-        // cpu_chart.series[0].setData(data.user, false);
-        // cpu_chart.series[1].setData(data.sys, false);
-    }
+    Highcharts.chart(id, option, function(chart) {
+    });
 }
 
-ipc.on('show', function() {
+var cpu_data = {
+    chart_data: [[], []]
+};
+
+function showCpuStats() {
     if (!cpu_monitor)
         cpu_monitor = new os.CpuMonitor({delay: 1});
 
-    var cpu_data = {
-        chart_data: {
-            user: [null, null, 1,2,3,4,5,6,7],
-            sys: [null, null, 1,2,3,4,5,6,7]
-        }
-    };
-
     cpu_monitor.on('cpuUsage', function(data) {
         cpu_data.cpu = data;
-        cpu_data.chart_data.user.push(parseFloat(data.user));
-        cpu_data.chart_data.sys.push(parseFloat(data.sys));
+        cpu_data.chart_data[0].push(parseFloat(data.user));
+        cpu_data.chart_data[1].push(parseFloat(data.sys));
 
-        render(templates.cpu, cpu_data);
-
+        render('cpu_chart', templates.cpu, cpu_data);
     });
 
     cpu_monitor.on('topCpuProcs', function(data) {
         cpu_data.procs = data;
-        render(templates.cpu, cpu_data);
+        render('cpu_chart', templates.cpu, cpu_data);
+    });
+}
+
+var mem_data = {
+    chart_data: [[], []]
+};
+
+function showMemStats() {
+    if (!mem_monitor)
+        mem_monitor = new os.MemMonitor({delay: 1});
+
+    mem_monitor.on('memUsage', function(data) {
+        mem_data.cpu = data;
+        mem_data.chart_data[0].push(parseFloat(1));
+        mem_data.chart_data[1].push(parseFloat(2));
+
+        render('mem_chart', templates.mem, mem_data);
     });
 
+    mem_monitor.on('topMemProcs', function(data) {
+        mem_data.procs = data;
+        render('mem_chart', templates.mem, mem_data);
+    });
+
+}
+
+var currentDisplay = 'cpu';
+showCpuStats();
+
+ipc.on('show', function() {
+    if (currentDisplay === 'cpu')
+        showCpuStats();
+    else if (currentDisplay === 'mem')
+        showMemStats();
 });
 
 ipc.on('after_hide', function() {
     if (cpu_monitor)
         cpu_monitor.emit('exit');
 
+    if (mem_monitor)
+        mem_monitor.emit('exit');
+
     cpu_monitor = null;
+    mem_monitor = null;
     cpu_chart = null;
 });
+
+function switchDisplay(display) {
+    currentDisplay = display;
+
+    if (currentDisplay === 'cpu')
+        showCpuStats();
+    else if (currentDisplay === 'mem')
+        showMemStats();
+}
 
 function quit() {
     ipc.send('quit');
 }
 
-function render(template, data) {
+function render(id, template, data) {
     if (ract)
         ract.set(data);
 
@@ -134,6 +168,6 @@ function render(template, data) {
         data: data
     });
 
-    plotCpuChart(data.chart_data);
+    plotChart(id, data.chart_data);
 }
 

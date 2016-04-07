@@ -1,0 +1,30 @@
+<div id="mem_chart" class="chart">
+</div>
+<table>
+    <tr>
+        <td colspan="2" class="tb-head">Overview</td>
+    </tr>
+    <tr>
+        <td>Used</td>
+        <td class="right">{{ mem.used }} %</td>
+    </tr>
+    <tr>
+        <td>Wired</td>
+        <td class="right">{{ mem.wired }} %</td>
+    </tr>
+    <tr>
+        <td>Unused</td>
+        <td class="right">{{ mem.unused }} %</td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td colspan="2" class="tb-head">Top Processes</td>
+    </tr>
+    {{#each procs:p}}
+    <tr>
+        <td>{{ command }}</td>
+        <td class="right">{{ mem }} %</td>
+    </tr>
+    {{/each}}
+</table>
