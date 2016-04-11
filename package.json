@@ -5,12 +5,12 @@
   "main": "main.js",
   "scripts": {
     "start": "grunt & electron .",
-    "build": "electron-packager . iStats --platform=darwin --arch=x64 --version=0.37.3 --icon=images/QuickStats.icns --ignore='node_modules/(electron-packager|electron-prebuilt|git-grunt|publish-release|grunt.*)'",
+    "build": "electron-packager . iStats --platform=darwin --arch=x64 --version=0.37.3 --icon=images/Icon.icns --ignore='node_modules/(electron-packager|electron-prebuilt|git-grunt|publish-release|grunt.*)'",
     "publish": "publish-release --template notes.md --assets iStats-darwin-x64.zip"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ningt/quick-stats.git"
+    "url": "https://github.com/ningt/iStats.git"
   },
   "author": "Tang Ning",
   "license": "ISC",

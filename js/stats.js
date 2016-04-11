@@ -142,13 +142,15 @@ ipc.on('after_hide', function() {
 function exitMonitor(monitor) {
     if (monitor) {
         monitor.emit('exit');
-        monitor = null;
     }
 }
 
 function exitAllMonitors() {
     exitMonitor(cpu_monitor);
     exitMonitor(mem_monitor);
+
+    mem_monitor = null;
+    cpu_monitor = null;
 }
 
 function switchDisplay(display) {
@@ -157,12 +159,14 @@ function switchDisplay(display) {
     if (currentDisplay === 'cpu') {
         showCpuStats();
         exitMonitor(mem_monitor);
+        mem_monitor = null;
 
         document.getElementById('mem-btn').classList.remove('active');
     }
     else if (currentDisplay === 'mem') {
         showMemStats();
         exitMonitor(cpu_monitor);
+        cpu_monitor = null;
 
         document.getElementById('cpu-btn').classList.remove('active');
     }
