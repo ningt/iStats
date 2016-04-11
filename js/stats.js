@@ -37,7 +37,10 @@ function plotChart(id, data) {
             },
             labels: {
                 formatter: function () {
-                    return this.value;
+                    if (id === 'mem_chart') {
+                        return this.value > 1024 ? (this.value / 1024).toFixed(1) + ' G' : this.value + ' M';
+                    }
+                    return this.value + ' %';
                 }
             }
         },
@@ -110,8 +113,8 @@ function showMemStats() {
 
     mem_monitor.on('memUsage', function(data) {
         mem_data.mem = data;
-        mem_data.chart_data[0].push(parseFloat(data.wired_kb / 1024));
-        mem_data.chart_data[1].push(parseFloat(data.used_kb / 1024));
+        mem_data.chart_data[0].push(parseFloat(data.used_kb / 1024));
+        mem_data.chart_data[1].push(parseFloat(data.wired_kb / 1024));
 
         render('mem_chart', templates.mem, mem_data);
     });
@@ -134,16 +137,20 @@ ipc.on('show', function() {
 });
 
 ipc.on('after_hide', function() {
-    if (cpu_monitor)
-        cpu_monitor.emit('exit');
-
-    if (mem_monitor)
-        mem_monitor.emit('exit');
+    exitTopProcs();
 
     cpu_monitor = null;
     mem_monitor = null;
     cpu_chart = null;
 });
+
+function exitTopProcs() {
+    if (cpu_monitor)
+        cpu_monitor.emit('exit');
+
+    if (mem_monitor)
+        mem_monitor.emit('exit');
+}
 
 function switchDisplay(display) {
     currentDisplay = display;
@@ -161,6 +168,7 @@ function switchDisplay(display) {
 }
 
 function quit() {
+    exitTopProcs();
     ipc.send('quit');
 }
 
