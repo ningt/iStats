@@ -127,29 +127,28 @@ function showMemStats() {
 }
 
 var currentDisplay = 'cpu';
-showCpuStats();
+switchDisplay(currentDisplay);
 
 ipc.on('show', function() {
-    if (currentDisplay === 'cpu')
-        showCpuStats();
-    else if (currentDisplay === 'mem')
-        showMemStats();
+    switchDisplay(currentDisplay);
 });
 
 ipc.on('after_hide', function() {
-    exitTopProcs();
+    exitAllMonitors();
 
-    cpu_monitor = null;
-    mem_monitor = null;
     cpu_chart = null;
 });
 
-function exitTopProcs() {
-    if (cpu_monitor)
-        cpu_monitor.emit('exit');
+function exitMonitor(monitor) {
+    if (monitor) {
+        monitor.emit('exit');
+        monitor = null;
+    }
+}
 
-    if (mem_monitor)
-        mem_monitor.emit('exit');
+function exitAllMonitors() {
+    exitMonitor(cpu_monitor);
+    exitMonitor(mem_monitor);
 }
 
 function switchDisplay(display) {
@@ -157,18 +156,22 @@ function switchDisplay(display) {
 
     if (currentDisplay === 'cpu') {
         showCpuStats();
-        mem_monitor.emit('exit');
-        mem_monitor = null;
+        exitMonitor(mem_monitor);
+
+        document.getElementById('mem-btn').classList.remove('active');
     }
     else if (currentDisplay === 'mem') {
         showMemStats();
-        cpu_monitor.emit('exit');
-        cpu_monitor = null;
+        exitMonitor(cpu_monitor);
+
+        document.getElementById('cpu-btn').classList.remove('active');
     }
+
+    document.getElementById(display + '-btn').classList.add('active');
 }
 
 function quit() {
-    exitTopProcs();
+    exitAllMonitors();
     ipc.send('quit');
 }
 
