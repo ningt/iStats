@@ -4,7 +4,7 @@
   "description": "Display system stats on your menubar",
   "main": "main.js",
   "scripts": {
-    "start": "grunt & electron .",
+    "start": "NODE_ENV=dev grunt & electron .",
     "build": "electron-packager . iStats --platform=darwin --arch=x64 --version=0.37.3 --icon=images/Icon.icns --ignore='node_modules/(electron-packager|electron-prebuilt|git-grunt|publish-release|grunt.*)'",
     "publish": "publish-release --template notes.md --assets iStats-darwin-x64.zip"
   },
@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "highcharts": "^4.2.3",
-    "menubar": "^4.0.2",
+    "menubar": "^5.1.0",
     "os-usage": "git+https://github.com/ningt/os-usage.git",
     "photon": "git+https://github.com/connors/photon.git",
     "ractive": "^0.7.3"

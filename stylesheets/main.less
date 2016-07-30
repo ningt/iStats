@@ -6,9 +6,6 @@ html, body {
 }
 
 body {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
     font-family: sans-serif;
 }
 
@@ -17,15 +14,17 @@ a {
 }
 
 .window-content {
-    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
     .chart {
         width: 100%;
-        height: 100px;
+        flex: 0 0 100px;
     }
 
     table {
-        margin-top: -10px;
         margin-bottom: 0;
 
         .tb-head {
@@ -40,6 +39,25 @@ a {
 
         td {
             width: 50%;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            margin-right: 5px;
+            display: inline-block;
+        }
+
+        .user, .used {
+            background-color: #8DBEEE;
+        }
+
+        .system, .wired {
+            background-color: #434348;
+        }
+
+        .idle, .unused {
+            background-color: #FFF;
         }
     }
 }

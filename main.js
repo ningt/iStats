@@ -8,15 +8,12 @@ var opts = {
     dir: __dirname,
     icon: path.join(__dirname, 'images', 'Icon.png'),
     tooltip: 'Quick Stats',
-    width: 300,
-    height: 350
+    width: 300
 };
 
 var mb = menubar(opts);
 
 mb.on('ready', function ready () {
-    console.log('app is ready');
-
     mb.on('show', function show () {
         mb.window.webContents.send("show");
     });
@@ -26,12 +23,14 @@ mb.on('ready', function ready () {
     });
 
     ipcMain.on('quit', function() {
-        mb.app.terminate();
+        mb.app.quit();
     });
 });
 
 mb.on('after-create-window', function() {
-    mb.window.openDevTools();
-    mb.window.setResizable(false);
+    if (process.env.NODE_ENV === 'dev') {
+        mb.window.openDevTools();
+        mb.window.setResizable(false);
+    }
 });
 

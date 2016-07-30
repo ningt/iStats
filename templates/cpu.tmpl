@@ -5,15 +5,21 @@
         <td colspan="2" class="tb-head">Overview</td>
     </tr>
     <tr>
-        <td>User</td>
+        <td>
+            <span><div class="indicator user"></div>User</span>
+        </td>
         <td class="right">{{ cpu.user }} %</td>
     </tr>
     <tr>
-        <td>System</td>
+        <td>
+            <span><div class="indicator system"></div>System</span>
+        </td>
         <td class="right">{{ cpu.sys }} %</td>
     </tr>
     <tr>
-        <td>Idle</td>
+        <td>
+            <span><div class="indicator idle"></div>Idle</span>
+        </td>
         <td class="right">{{ cpu.idle }} %</td>
     </tr>
 </table>

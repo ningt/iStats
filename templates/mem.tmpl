@@ -5,15 +5,21 @@
         <td colspan="2" class="tb-head">Overview</td>
     </tr>
     <tr>
-        <td>Used</td>
+        <td>
+            <span><div class="indicator used"></div>Used</span>
+        </td>
         <td class="right">{{ mem.used }}</td>
     </tr>
     <tr>
-        <td>Wired</td>
+        <td>
+            <span><div class="indicator wired"></div>Wired</span>
+        </td>
         <td class="right">{{ mem.wired }}</td>
     </tr>
     <tr>
-        <td>Unused</td>
+        <td>
+            <span><div class="indicator unused"></div>Unused</span>
+        </td>
         <td class="right">{{ mem.unused }}</td>
     </tr>
 </table>
