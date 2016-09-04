@@ -18,4 +18,4 @@ Please download at [release](https://github.com/ningt/iStats/releases) page.
 ## Run it on your Mac
 - Clone this repo `https://github.com/ningt/iStats.git`
 - `cd iStats`
-- run `npm install && npm run start`
+- run `npm install && npm start`
