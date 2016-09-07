@@ -5,9 +5,11 @@
   "main": "main.js",
   "scripts": {
     "start": "NODE_ENV=dev grunt & electron .",
+    "clean": "rm -r iStats-darwin-x64",
     "build": "electron-packager . iStats --platform=darwin --arch=x64 --version=1.3.1 --icon=images/Icon.icns --ignore='node_modules/(electron-packager|electron-prebuilt|git-grunt|publish-release|grunt.*)'",
     "zip": "cd iStats-darwin-x64 && zip -ryX iStats-darwin-x64.zip iStats.app",
-    "publish": "publish-release --template notes.md --assets iStats-darwin-x64/iStats-darwin-x64.zip"
+    "publish": "publish-release --template notes.md --assets iStats-darwin-x64/iStats-darwin-x64.zip",
+    "release": "npm run clean && npm run build && npm run zip && npm run publish"
   },
   "repository": {
     "type": "git",
