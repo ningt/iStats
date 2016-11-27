@@ -6,7 +6,7 @@ const ipcMain = require('electron').ipcMain;
 
 var opts = {
     dir: __dirname,
-    icon: path.join(__dirname, 'images', 'Icon.png'),
+    icon: path.join(__dirname, 'images', 'IconTemplate.png'),
     tooltip: 'Quick Stats',
     width: 300
 };
