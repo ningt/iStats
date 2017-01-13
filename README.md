@@ -3,7 +3,7 @@
 Thanks [@eva](https://yipingxia.github.io/) for the app icon!
 
 # iStats
-An Electron app to display CPU and memory stats on Mac menubar.
+An Electron app on Mac menubar to display CPU and memory stats in a dropdown panel.
 
 ## App Preview
 ![demo](http://g.recordit.co/Sgeb9Uannw.gif)
